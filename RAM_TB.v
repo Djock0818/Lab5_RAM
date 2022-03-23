@@ -1,18 +1,18 @@
 module ram256x32_tb();
-	reg [63:0] IN;
+	reg [63:0] in;
 	reg [63:0] Address;
 	wire [7:0] RAMaddress;
-	wire [63:0] OUT;
+	wire [63:0] out;
 	reg clock;
 	reg RAMwrite;
 	
-	ram256x32 dut(RAMaddress, clock, IN, RAMwrite, OUT);
+	ram256x32 dut(RAMaddress, clock, in, RAMwrite, out);
 	
 	assign RAMaddress = Address[7:0];
 	
 	initial begin 
 		clock <= 1'b1;
-		IN <= 64'b0;
+		in <= 64'b0;
 		Address <= 64'b0;
 		RAMwrite <= 1'b1;
 		#5120 $stop;
@@ -21,7 +21,7 @@ module ram256x32_tb();
 	always #5 clock <= ~clock;
 	
 	always @(negedge clock) begin
-		IN <= {$random, $random};
+		in <= {$random, $random};
 		#2;
 		Address <= Address+64'b1;
 		#5;
